@@ -1,0 +1,26 @@
+MY ARCH LINUX SYSTEM MAP
+
+Distribution:
+Kernel:
+Desktop Environment:
+Shell:
+PID 1:
+Terminal:
+
+My mental model:
+
+Hardware
+   ↓
+UEFI
+   ↓
+Bootloader
+   ↓
+Linux Kernel
+   ↓
+systemd
+   ↓
+Services / User Space
+   ↓
+KDE Plasma
+   ↓
+Terminal / Applications

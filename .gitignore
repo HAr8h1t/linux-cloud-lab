@@ -1,0 +1,7 @@
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Private or local-only notes
+private/

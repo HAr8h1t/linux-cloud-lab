@@ -1,0 +1,33 @@
+                         YOUR ARCH BOOT
+
+Power button
+     ↓
+UEFI firmware
+     ↓
+EFI System Partition
+     ↓
+GRUB EFI program
+     ↓
+GRUB menu
+     │
+     ├───────────────┐
+     ↓               ↓
+   Arch            WBM-HD
+     ↓               ↓
+vmlinuz-linux     chainloader
+     ↓               ↓
+amd-ucode.img     Windows EFI
+     ↓
+initramfs-linux.img
+     ↓
+root filesystem
+     ↓
+systemd (PID 1)
+     ↓
+system services
+     ↓
+user-session systemd
+     ↓
+KDE Plasma
+     ↓
+Firefox 

@@ -1,0 +1,128 @@
+1. First: What exactly is "Linux"?
+Linux is primarily the kernel.
+The kernel is the core software that sits between applications and hardware.
+fn:-
+It handles things such as:
+- CPU scheduling
+- memory management
+- processes
+- hardware/device interaction
+- filesystems
+- networking
+- permissions
+- system calls
+
+Arch Linux-
+Arch Linux is a Linux distribution.
+A distribution takes the Linux kernel and combines it with a large collection of other software needed to create a usable operating system.
+linux =! arch
+Linux = kernel
+Arch Linux = distribution built around Linux
+
+2. Kernel vs User Space
+Kernel space
+The kernel operates in a privileged environment.
+It can directly manage critical system resources. eg CPU RAM Devices Network interfaces Filesystems Processes
+User space
+Normal applications live here.
+
+┌────────────────────────────────────┐
+│            USER SPACE              │
+│                                    │
+│ Firefox   Python   Bash   KDE      │
+│                                    │
+├────────────────────────────────────┤
+│          SYSTEM CALLS              │
+├────────────────────────────────────┤
+│          LINUX KERNEL              │
+│                                    │
+│ CPU  RAM  Storage  Network  USB    │
+└────────────────────────────────────┘
+
+
+3.What is a Shell?
+A shell is a program that lets you interact with the operating system through commands.
+Common shells include:
+bash
+zsh
+fish
+
+Shell ≠ Terminal
+This distinction is worth getting right now.
+A terminal emulator is the graphical application/window.
+Konsole
+GNOME Terminal
+Alacritty
+kitty
+The shell is the program running inside it.
+So:
+Konsole
+   ↓
+Bash
+   ↓
+commands
+   ↓
+Linux system
+
+
+4.What is systemd?
+Your computer needs something to manage the system after the kernel starts.
+On a typical modern Arch installation, systemd is the init/system manager
+simplfied flow:-
+UEFI
+ ↓
+Bootloader
+ ↓
+Kernel
+ ↓
+systemd
+ ↓
+services
+ ↓
+login
+ ↓
+desktop
+systemd can manage things such as:
+- services
+- startup
+- shutdown
+- dependencies
+- timers
+
+
+
+5. Cmd done:-
+uname -r
+
+cat /etc/os-release
+
+echo $XDG_CURRENT_DESKTOP
+
+echo $SHELL
+
+ps -p 1 -o pid,comm,args
+
+
+
+PID 1
+systemd
+│
+├── NetworkManager
+├── journald
+├── udevd
+├── ...
+│
+└── user-session systemd
+      PID 681
+      │
+      ├── plasmashell
+      ├── DiscoverNotifier
+      ├── ...
+      └── other user processes
+
+
+
+chap-1
+ The Linux kernel is the core that manages hardware and system resources. Arch provides the distribution/user-space environment around it.
+ systemd is PID 1 and manages system services. My KDE Plasma environment runs as user-space processes, which themselves can contain many threads.
+ Processes have unique PIDs and parent processes are identified through PPIDs.

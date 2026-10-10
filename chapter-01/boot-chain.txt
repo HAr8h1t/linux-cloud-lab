@@ -1,0 +1,108 @@
+after pressing power button this happens:-
+
+Power button
+     ↓
+UEFI firmware
+     ↓
+EFI System Partition
+     ↓
+bootloader (GRUB)
+     ↓
+Linux kernel
+     ↓
+initramfs
+     ↓
+real root filesystem
+     ↓
+systemd (PID 1)
+     ↓
+system services
+     ↓
+your user session
+     ↓
+KDE Plasma
+     ↓
+Firefox / other applications
+
+
+
+Why UEFI Can't Just "Start Linux" (The Hand-off)
+
+UEFI cannot directly start Linux because of architectural and filesystem limitations:
+• File System Blindness: UEFI natively only understands a very limited set of file systems, primarily FAT32 (on the EFI System Partition, or ESP). Most Linux installations live on complex filesystems like ext4, Btrfs, or XFS, which UEFI cannot read.
+• Lack of Configuration Context: Starting Linux requires setting up specific kernel parameters, loading an initial RAM disk (initramfs), and managing dual-boot menus. UEFI is designed to be a generic hardware initializer, not an operating system manager
+
+
+What is initramfs?
+Initramfs stands for Initial RAM Filesystem. It's a small temporary filesystem loaded into RAM during the Linux boot process. It contains the tools, scripts, and sometimes kernel modules needed to prepare your system before your real root filesystem can be accessed.
+Think of it as a temporary preparation environment that helps Linux get ready to start your actual operating system.
+2. Why does Linux need it?
+Imagine your Arch installation is on an SSD. To start Linux properly, the kernel must access that SSD and find your root filesystem.
+But there's a potential problem:
+- Your root filesystem might need a particular storage driver.
+- It might be encrypted and require unlocking first.
+- It might be inside an LVM volume or a RAID setup.
+- The kernel needs the right tools and modules to access it.
+The kernel cannot mount the real root filesystem until these prerequisites are satisfied.
+Initramfs solves this problem by providing the necessary tools and modules before the real root filesystem is mounted.
+
+
+to look : ls -lh /boot/initramfs-linux.img
+To list the files inside it, Arch provides lsinitcpio:
+lsinitcpio /boot/initramfs-linux.img | less
+Press q to exit the listing.
+
+Component	Main responsibility
+Linux kernel	Manages hardware, memory, processes and core OS functionality
+Initramfs	Provides the early tools and modules needed to prepare the system for normal startup
+Real root filesystem	Contains your installed Arch system, programs, libraries and configuration
+systemd	Manages normal system startup, services and targets
+A useful analogy:
+- Kernel: The engine and core machinery.
+- Initramfs: The equipment needed to get the engine connected to everything it needs.
+- Root filesystem: The actual operating environment.
+- systemd: The manager that coordinates the normal startup process.
+
+
+chainloader : chainloading means handing control to another boot program.
+
+
+
+Commands we used    
+ls /sys/firmware/efi
+
+Checked that we're running through UEFI.
+cat /proc/cmdline
+
+Viewed the kernel command line.
+ls -lh /boot
+
+Inspected boot files.
+sudo efibootmgr -v
+
+Inspected firmware boot entries.
+findmnt /boot
+
+Found which partition is mounted as /boot.
+ls -lah /boot/EFI
+
+Inspected EFI directories.
+ls -lah /boot/grub
+
+Inspected GRUB files.
+journalctl -b -0 -k | head -80
+
+Viewed kernel messages from the current boot.
+file /boot/vmlinuz-linux
+
+Inspected the kernel image.   
+file /boot/initramfs-linux.img
+
+Identified the initramfs archive.
+lsinitcpio -l /boot/initramfs-linux.img | head -30
+
+Inspected what's inside initramfs.
+grep -E 'menuentry|linux|initrd|chainloader' /boot/grub/grub.cfg
+
+Inspected what GRUB actually loads for Arch and Windows.
+
