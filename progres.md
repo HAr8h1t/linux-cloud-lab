@@ -2,7 +2,7 @@
 
 A living record of my progress through Linux internals, system administration, cloud infrastructure, and security fundamentals.
 
-**Last updated:** October 2026
+**Last updated:** November 2026
 
 For the overall project and roadmap, see [README.md](README.md).
 
@@ -17,6 +17,8 @@ For the overall project and roadmap, see [README.md](README.md).
 | Boot process and initramfs | In progress |
 | Filesystems and VFS | Upcoming |
 | Networking and cloud fundamentals | Upcoming |
+| Docker and img container fundamentals | Completed |
+
 
 ## Chapter Progress
 
@@ -124,5 +126,5 @@ lsinitcpio /boot/initramfs-linux.img
 
 - **October 2026:** Established the GitHub repository and began tracking Linux learning notes with Git.
 - **October 2026:** Documented the Linux boot process and investigated the Arch Linux dual-boot configuration.
+- **November 2026:** Learned and practiced the Docker process and investigated build own container imgs uploaded it on docker hub.
 
-*This tracker reflects ongoing learning. A topic is marked complete only after its concepts and practical work have been reviewed.*
